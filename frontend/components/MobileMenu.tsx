@@ -78,16 +78,18 @@ export default function MobileMenu() {
         }
 
         .mobile-nav {
-          width: 80%;
-          max-width: 300px;
+          width: 85%;
+          max-width: 310px;
           height: 100%;
-          background: var(--bg-secondary); /* Solid background from theme */
-          padding: 6rem 2rem;
+          background: var(--bg-secondary); /* This is solid white/dark based on theme */
+          opacity: 1;
+          padding: 6.5rem 2.5rem;
           display: flex;
           flex-direction: column;
-          box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+          box-shadow: -15px 0 45px rgba(0,0,0,0.5); /* Stronger shadow */
           animation: slideIn 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-          border-left: 1px solid var(--border-color);
+          border-left: 3px solid var(--accent-vibrant); /* Strong visual separation */
+          z-index: 1002;
         }
 
         @keyframes slideIn {
@@ -101,7 +103,7 @@ export default function MobileMenu() {
           right: 2rem;
           background: none;
           border: none;
-          font-size: 2.5rem;
+          font-size: 2.8rem;
           color: var(--text-primary);
           cursor: pointer;
         }
@@ -109,25 +111,27 @@ export default function MobileMenu() {
         .mobile-links {
           display: flex;
           flex-direction: column;
-          gap: 2rem;
+          gap: 2.5rem;
         }
 
         .mobile-links a {
-          font-size: 1.5rem;
-          font-weight: 600;
+          font-size: 1.7rem;
+          font-weight: 700; /* Extra bold for visibility */
           color: var(--text-primary);
           text-decoration: none;
-          transition: color 0.3s ease;
+          transition: transform 0.2s ease, color 0.2s ease;
         }
 
-        .mobile-links a:hover {
+        .mobile-links a:active {
+          transform: scale(0.95);
           color: var(--accent-vibrant);
         }
 
         .mobile-footer {
           margin-top: auto;
-          font-size: 1rem;
-          opacity: 0.6;
+          font-size: 1.1rem;
+          opacity: 0.8;
+          color: var(--text-secondary);
         }
 
         @media (max-width: 768px) {
