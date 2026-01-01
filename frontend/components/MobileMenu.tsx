@@ -71,8 +71,7 @@ export default function MobileMenu() {
           left: 0;
           right: 0;
           bottom: 0;
-          background: rgba(0, 0, 0, 0.4);
-          backdrop-filter: blur(8px);
+          background: rgba(0, 0, 0, 0.6); /* Slightly darker for better focus */
           z-index: 1000;
           display: flex;
           justify-content: flex-end;
@@ -82,12 +81,13 @@ export default function MobileMenu() {
           width: 80%;
           max-width: 300px;
           height: 100%;
-          background: var(--bg-secondary);
+          background: var(--bg-secondary); /* Solid background from theme */
           padding: 6rem 2rem;
           display: flex;
           flex-direction: column;
-          box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+          box-shadow: -10px 0 30px rgba(0,0,0,0.2);
           animation: slideIn 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+          border-left: 1px solid var(--border-color);
         }
 
         @keyframes slideIn {
