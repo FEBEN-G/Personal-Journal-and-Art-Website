@@ -216,22 +216,14 @@ footer {
     padding: 0.6rem 1.2rem;
     margin-left: 1rem;
     margin-right: 1rem;
-    flex-direction: column;
-    gap: 1rem;
     border-radius: 24px;
     height: auto;
+    flex-direction: row; /* Keep it horizontal with the toggle */
+    justify-content: space-between;
   }
 
   .nav-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-
-  .nav-links a {
-    margin: 0 0.5rem;
-    font-size: 0.85rem;
+    display: none; /* Hide standard nav on mobile */
   }
 
   .container {

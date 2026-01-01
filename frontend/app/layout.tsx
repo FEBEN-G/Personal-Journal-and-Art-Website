@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display, Outfit } from "next/font/google";
 import "./globals.css";
 import ThemeToggle from "@/components/ThemeToggle";
+import MobileMenu from "@/components/MobileMenu";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -47,7 +48,10 @@ export default function RootLayout({
               <a href="/art">Art</a>
               <a href="/about">About</a>
             </nav>
-            <ThemeToggle />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <ThemeToggle />
+              <MobileMenu />
+            </div>
           </header>
           <main>{children}</main>
           <footer className="fade-up">
