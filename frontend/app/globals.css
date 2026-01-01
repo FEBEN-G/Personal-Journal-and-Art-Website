@@ -213,18 +213,40 @@ footer {
   }
 
   .glass-header {
-    padding: 0.8rem 1.5rem;
-    margin: 0.5rem 0.5rem 0 0.5rem; /* Reduced top gap significantly */
-    border-radius: 16px;
-    height: auto;
-    flex-direction: row;
+    padding: 1rem 1.5rem;
+    margin: 0.5rem 0.5rem 0 0.5rem;
+    border-radius: 20px;
+    flex-wrap: wrap; /* Allow wrapping to 2 rows */
     justify-content: space-between;
-    position: sticky;
-    top: 0.5rem;
+    align-items: center;
+    height: auto;
+  }
+
+  .logo {
+    order: 1;
+  }
+
+  .header-actions {
+    order: 2;
   }
 
   .nav-links {
-    display: none; /* Hide standard nav on mobile */
+    order: 3;
+    width: 100%; /* Force nav to its own row on mobile */
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--glass-border);
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .nav-links a {
+    margin: 0;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   .container {
