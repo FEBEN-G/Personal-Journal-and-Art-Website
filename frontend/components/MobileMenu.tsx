@@ -71,7 +71,8 @@ export default function MobileMenu() {
           left: 0;
           right: 0;
           bottom: 0;
-          background: rgba(0, 0, 0, 0.6); /* Slightly darker for better focus */
+          background: rgba(0, 0, 0, 0.7); /* Darker backdrop */
+          backdrop-filter: blur(4px); /* Blur the content behind, not the menu */
           z-index: 1000;
           display: flex;
           justify-content: flex-end;
@@ -79,16 +80,16 @@ export default function MobileMenu() {
 
         .mobile-nav {
           width: 85%;
-          max-width: 310px;
+          max-width: 320px;
           height: 100%;
-          background: var(--bg-secondary); /* This is solid white/dark based on theme */
+          background: var(--bg-secondary) !important; /* Force solid color */
           opacity: 1;
-          padding: 6.5rem 2.5rem;
+          padding: 4rem 2rem; /* Reduced top padding to move links up */
           display: flex;
           flex-direction: column;
-          box-shadow: -15px 0 45px rgba(0,0,0,0.5); /* Stronger shadow */
+          box-shadow: -15px 0 50px rgba(0,0,0,0.6);
           animation: slideIn 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-          border-left: 3px solid var(--accent-vibrant); /* Strong visual separation */
+          border-left: 4px solid var(--accent-vibrant);
           z-index: 1002;
         }
 
@@ -111,15 +112,16 @@ export default function MobileMenu() {
         .mobile-links {
           display: flex;
           flex-direction: column;
-          gap: 2.5rem;
+          gap: 1.8rem;
+          margin-top: 2rem;
         }
 
         .mobile-links a {
-          font-size: 1.7rem;
-          font-weight: 700; /* Extra bold for visibility */
+          font-size: 1.8rem;
+          font-weight: 800;
           color: var(--text-primary);
           text-decoration: none;
-          transition: transform 0.2s ease, color 0.2s ease;
+          letter-spacing: -0.5px;
         }
 
         .mobile-links a:active {
