@@ -20,25 +20,25 @@ export default function EntryCard({ id, title, date, time, excerpt }: EntryCardP
             {date}
           </span>
         </div>
-        <h2 className="serif" style={{ fontSize: '2.2rem', color: 'var(--text-primary)', lineHeight: 1.2 }}>
+        <h2 className="serif" style={{ fontSize: 'clamp(1.5rem, 5vw, 2.2rem)', color: 'var(--text-primary)', lineHeight: 1.2 }}>
           {title}
         </h2>
       </div>
       <p style={{ 
         color: 'var(--text-secondary)', 
-        fontSize: '1rem', 
+        fontSize: 'clamp(0.9rem, 2.5vw, 1rem)', 
         lineHeight: 1.6, 
         display: '-webkit-box', 
         WebkitLineClamp: 3, 
         WebkitBoxOrient: 'vertical', 
         overflow: 'hidden', 
-        marginBottom: '2rem',
+        marginBottom: '1.5rem',
         fontFamily: 'var(--font-sans)'
       }}>
         {excerpt.replace(/#+\s?/g, '').replace(/\*+\s?/g, '').replace(/---\s?/g, '')}
       </p>
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-vibrant)', fontWeight: 600, fontSize: '0.9rem' }}>
-        Read Full Story <span style={{ fontSize: '1.2rem' }}>→</span>
+        Read Full Story <span style={{ fontSize: '1.1rem' }}>→</span>
       </div>
     </Link>
   );
