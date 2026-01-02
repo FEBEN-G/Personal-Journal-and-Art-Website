@@ -12,6 +12,7 @@ I have completed the implementation of your calm personal website. The project i
 
 ### Performance & Reliability (Ultimate Reliability Fix) ⚡
 - **Full CSR Transition**: Converted all critical pages (Journal, Art, Verses) to **Client-Side Rendering (CSR)**. This allows the browser to handle long backend wake-up times (cold starts) without triggering Vercel's hard 504 Timeout page.
+- **Resilient Fetching (Auto-Retry)**: Added a smart retry engine. If the backend is waking up, the app will now automatically retry the connection every few seconds (up to 3 times) before ever showing an error. This "hides" the server wake-up from the user perfectly.
 - **Elegant Loading States**: Visitors now see a professional loading spinner and a friendly message while the server wakes up, keeping them engaged and on the site.
 - **Background Warm-up**: Maintained the background ping on the homepage for a faster first-load experience.
 - **Uptime Monitoring**: Added instructions for UptimeRobot for 100% "Always Awake" status on free tiers.
