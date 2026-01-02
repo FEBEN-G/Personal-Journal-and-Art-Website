@@ -36,9 +36,8 @@ export default function ArtGallery() {
 
       <div style={{ minHeight: '400px' }}>
         {loading ? (
-          <div className="art-card" style={{ textAlign: 'center', padding: '4rem', maxWidth: '800px', margin: '0 auto' }}>
+          <div className="art-card" style={{ textAlign: 'center', padding: '6rem', maxWidth: '800px', margin: '0 auto' }}>
             <div className="loading-spinner"></div>
-            <p className="serif" style={{ fontSize: '1.2rem', marginTop: '1.5rem', opacity: 0.7 }}>Arranging the exhibition... 🎨</p>
           </div>
         ) : error ? (
           <div className="art-card" style={{ textAlign: 'center', padding: '4rem', maxWidth: '800px', margin: '0 auto', border: '1px dashed var(--accent-vibrant)' }}>

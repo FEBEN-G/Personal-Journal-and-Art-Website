@@ -36,9 +36,8 @@ export default function JournalList() {
 
       <div style={{ maxWidth: '800px', margin: '0 auto', paddingBottom: '6rem', minHeight: '300px' }}>
         {loading ? (
-          <div className="art-card" style={{ textAlign: 'center', padding: '4rem' }}>
+          <div className="art-card" style={{ textAlign: 'center', padding: '6rem' }}>
             <div className="loading-spinner"></div>
-            <p className="serif" style={{ fontSize: '1.2rem', marginTop: '1.5rem', opacity: 0.7 }}>Waking up the archives... 🌿</p>
           </div>
         ) : error ? (
           <div className="art-card" style={{ textAlign: 'center', padding: '4rem', border: '1px dashed var(--accent-vibrant)' }}>

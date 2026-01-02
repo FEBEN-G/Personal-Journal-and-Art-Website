@@ -35,7 +35,6 @@ export default function JournalEntryPage({ params }: { params: Promise<{ id: str
       <div className="fade-up" style={{ padding: '6rem 0' }}>
         <div className="art-card" style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', padding: '6rem' }}>
           <div className="loading-spinner"></div>
-          <p className="serif" style={{ fontSize: '1.2rem', marginTop: '1.5rem', opacity: 0.7 }}>Opening the book... 📖</p>
         </div>
         <style jsx>{`
           .loading-spinner {
