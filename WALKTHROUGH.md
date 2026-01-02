@@ -10,10 +10,11 @@ I have completed the implementation of your calm personal website. The project i
 - **Horizontal Mobile Nav**: Replaced the hamburger toggle with a modern two-row layout on mobile. The logo and dark mode toggle sit on the top row, with a clean horizontal navigation list directly below—ensuring all pages are accessible in one tap.
 - **Glassmorphism**: Maintained a modern floating header with backdrop-blur effects.
 
-### Performance & Reliability (Free Tier Fix) ⚡
-- **504 Timeout Resolution**: Identified that Render's Free Tier "sleeps" and causes timeouts on Vercel. 
-- **Background Warm-up**: Implemented a hidden background fetch on the Homepage to wake up the server as soon as the user arrives, making the site feel much faster.
-- **Uptime Monitoring**: Added instructions for UptimeRobot to keep the site 100% "Always Awake" for free.
+### Performance & Reliability (Ultimate Reliability Fix) ⚡
+- **Full CSR Transition**: Converted all critical pages (Journal, Art, Verses) to **Client-Side Rendering (CSR)**. This allows the browser to handle long backend wake-up times (cold starts) without triggering Vercel's hard 504 Timeout page.
+- **Elegant Loading States**: Visitors now see a professional loading spinner and a friendly message while the server wakes up, keeping them engaged and on the site.
+- **Background Warm-up**: Maintained the background ping on the homepage for a faster first-load experience.
+- **Uptime Monitoring**: Added instructions for UptimeRobot for 100% "Always Awake" status on free tiers.
 
 ![Debugging the 504 Timeout](/home/feben/.gemini/antigravity/brain/db1414b2-1055-4f2b-af7a-17a11f35643c/check_live_site_errors_1767331038683.webp)
 *Investigating the live site performance issue.*
