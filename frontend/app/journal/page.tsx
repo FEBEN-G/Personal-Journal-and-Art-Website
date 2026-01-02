@@ -1,13 +1,28 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import EntryCard from '@/components/EntryCard';
 import { fetchJournalEntries } from '@/services/api';
 
-export default async function JournalList() {
-  let entries = [];
-  try {
-    entries = await fetchJournalEntries();
-  } catch (err) {
-    console.error(err);
-  }
+export default function JournalList() {
+  const [entries, setEntries] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await fetchJournalEntries();
+        setEntries(data);
+      } catch (err) {
+        console.error(err);
+        setError('Unable to load entries. The server might be waking up—please try refreshing in a moment.');
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
 
   return (
     <div className="fade-up">
@@ -19,8 +34,17 @@ export default async function JournalList() {
         <div className="art-separator"></div>
       </section>
 
-      <div style={{ maxWidth: '800px', margin: '0 auto', paddingBottom: '6rem' }}>
-        {entries.length === 0 ? (
+      <div style={{ maxWidth: '800px', margin: '0 auto', paddingBottom: '6rem', minHeight: '300px' }}>
+        {loading ? (
+          <div className="art-card" style={{ textAlign: 'center', padding: '4rem' }}>
+            <div className="loading-spinner"></div>
+            <p className="serif" style={{ fontSize: '1.2rem', marginTop: '1.5rem', opacity: 0.7 }}>Waking up the archives... 🌿</p>
+          </div>
+        ) : error ? (
+          <div className="art-card" style={{ textAlign: 'center', padding: '4rem', border: '1px dashed var(--accent-vibrant)' }}>
+            <p className="serif" style={{ fontSize: '1.1rem', color: 'var(--accent-vibrant)' }}>{error}</p>
+          </div>
+        ) : entries.length === 0 ? (
           <div className="art-card" style={{ textAlign: 'center' }}>
             <p className="serif" style={{ fontSize: '1.2rem' }}>The journal is waiting for its first entry of 2026.</p>
           </div>
@@ -37,6 +61,22 @@ export default async function JournalList() {
           ))
         )}
       </div>
+
+      <style jsx>{`
+        .loading-spinner {
+          width: 40px;
+          height: 40px;
+          border: 3px solid var(--bg-secondary);
+          border-top: 3px solid var(--accent-vibrant);
+          border-radius: 50%;
+          margin: 0 auto;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }

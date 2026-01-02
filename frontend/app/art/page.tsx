@@ -1,13 +1,28 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { fetchArt } from '@/services/api';
 import GalleryGrid from '@/components/GalleryGrid';
 
-export default async function ArtGallery() {
-  let artPieces = [];
-  try {
-    artPieces = await fetchArt();
-  } catch (err) {
-    console.error(err);
-  }
+export default function ArtGallery() {
+  const [artPieces, setArtPieces] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await fetchArt();
+        setArtPieces(data);
+      } catch (err) {
+        console.error(err);
+        setError('Unable to load gallery. The server might be waking up—please try refreshing in a moment.');
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
 
   return (
     <div className="fade-up">
@@ -19,13 +34,40 @@ export default async function ArtGallery() {
         <div className="art-separator"></div>
       </section>
 
-      {artPieces.length === 0 ? (
-        <div className="art-card" style={{ textAlign: 'center' }}>
-          <p className="serif" style={{ fontSize: '1.2rem' }}>The canvas is clean. New art coming soon.</p>
-        </div>
-      ) : (
-        <GalleryGrid artPieces={artPieces} />
-      )}
+      <div style={{ minHeight: '400px' }}>
+        {loading ? (
+          <div className="art-card" style={{ textAlign: 'center', padding: '4rem', maxWidth: '800px', margin: '0 auto' }}>
+            <div className="loading-spinner"></div>
+            <p className="serif" style={{ fontSize: '1.2rem', marginTop: '1.5rem', opacity: 0.7 }}>Arranging the exhibition... 🎨</p>
+          </div>
+        ) : error ? (
+          <div className="art-card" style={{ textAlign: 'center', padding: '4rem', maxWidth: '800px', margin: '0 auto', border: '1px dashed var(--accent-vibrant)' }}>
+            <p className="serif" style={{ fontSize: '1.1rem', color: 'var(--accent-vibrant)' }}>{error}</p>
+          </div>
+        ) : artPieces.length === 0 ? (
+          <div className="art-card" style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto' }}>
+            <p className="serif" style={{ fontSize: '1.2rem' }}>The canvas is clean. New art coming soon.</p>
+          </div>
+        ) : (
+          <GalleryGrid artPieces={artPieces} />
+        )}
+      </div>
+
+      <style jsx>{`
+        .loading-spinner {
+          width: 40px;
+          height: 40px;
+          border: 3px solid var(--bg-secondary);
+          border-top: 3px solid var(--accent-vibrant);
+          border-radius: 50%;
+          margin: 0 auto;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }

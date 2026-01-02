@@ -1,12 +1,27 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { fetchVerses } from '@/services/api';
 
-export default async function VersePage() {
-  let verses = [];
-  try {
-    verses = await fetchVerses();
-  } catch (err) {
-    console.error(err);
-  }
+export default function VersePage() {
+  const [verses, setVerses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await fetchVerses();
+        setVerses(data);
+      } catch (err) {
+        console.error(err);
+        setError('Unable to load verses. The server might be waking up—please try refreshing in a moment.');
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
 
   return (
     <div className="fade-up">
@@ -18,8 +33,17 @@ export default async function VersePage() {
         <div className="art-separator"></div>
       </section>
 
-      <div style={{ maxWidth: '800px', margin: '0 auto', paddingBottom: '6rem' }}>
-        {verses.length === 0 ? (
+      <div style={{ maxWidth: '800px', margin: '0 auto', paddingBottom: '6rem', minHeight: '300px' }}>
+        {loading ? (
+          <div className="art-card" style={{ textAlign: 'center', padding: '4rem' }}>
+            <div className="loading-spinner"></div>
+            <p className="serif" style={{ fontSize: '1.2rem', marginTop: '1.5rem', opacity: 0.7 }}>Seeking His Word... ✝︎</p>
+          </div>
+        ) : error ? (
+          <div className="art-card" style={{ textAlign: 'center', padding: '4rem', border: '1px dashed var(--accent-vibrant)' }}>
+            <p className="serif" style={{ fontSize: '1.1rem', color: 'var(--accent-vibrant)' }}>{error}</p>
+          </div>
+        ) : verses.length === 0 ? (
           <div className="art-card" style={{ textAlign: 'center' }}>
             <p className="serif" style={{ fontSize: '1.2rem' }}>No verses shared yet. ✝︎</p>
           </div>
@@ -62,6 +86,22 @@ export default async function VersePage() {
           ))
         )}
       </div>
+
+      <style jsx>{`
+        .loading-spinner {
+          width: 40px;
+          height: 40px;
+          border: 3px solid var(--bg-secondary);
+          border-top: 3px solid var(--accent-vibrant);
+          border-radius: 50%;
+          margin: 0 auto;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }

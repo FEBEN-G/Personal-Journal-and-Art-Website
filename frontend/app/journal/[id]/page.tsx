@@ -1,18 +1,73 @@
+'use client';
+
+import { useState, useEffect, use } from 'react';
 import DateTime from '@/components/DateTime';
 import { fetchJournalEntry } from '@/services/api';
 import { notFound } from 'next/navigation';
 
-export default async function JournalEntryPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  let entry;
-  try {
-    entry = await fetchJournalEntry(id);
-  } catch (err) {
-    console.error(err);
-    return notFound();
+export default function JournalEntryPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+  const [entry, setEntry] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await fetchJournalEntry(id);
+        if (!data) {
+          setError('Entry not found.');
+        } else {
+          setEntry(data);
+        }
+      } catch (err) {
+        console.error(err);
+        setError('Unable to load this entry. The server might be waking up—please try refreshing.');
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="fade-up" style={{ padding: '6rem 0' }}>
+        <div className="art-card" style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', padding: '6rem' }}>
+          <div className="loading-spinner"></div>
+          <p className="serif" style={{ fontSize: '1.2rem', marginTop: '1.5rem', opacity: 0.7 }}>Opening the book... 📖</p>
+        </div>
+        <style jsx>{`
+          .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--bg-secondary);
+            border-top: 3px solid var(--accent-vibrant);
+            border-radius: 50%;
+            margin: 0 auto;
+            animation: spin 1s linear infinite;
+          }
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </div>
+    );
   }
 
-  if (!entry) return notFound();
+  if (error || !entry) {
+    return (
+      <div className="fade-up" style={{ padding: '6rem 0' }}>
+        <div className="art-card" style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', padding: '4rem', border: '1px dashed var(--accent-vibrant)' }}>
+          <p className="serif" style={{ fontSize: '1.2rem', color: 'var(--accent-vibrant)' }}>{error || 'Entry not found'}</p>
+          <div style={{ marginTop: '2rem' }}>
+            <a href="/journal" className="btn btn-primary">Back to Archive</a>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Simple cleaner to remove Markdown symbols (#, *, etc) for a cleaner UI
   const cleanContent = entry.contentText
