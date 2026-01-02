@@ -1,6 +1,24 @@
+'use client';
+
+import { useEffect } from 'react';
 import Link from 'next/link';
 
 export default function Home() {
+  // Background "Warm-up" ping for Render Free Tier
+  useEffect(() => {
+    const pingServer = async () => {
+      try {
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+        // Send a head request or a simple GET to wake up Render
+        fetch(`${API_URL}/journal`, { method: 'GET', mode: 'no-cors' }).catch(() => {});
+        console.log('Backend warm-up initiated... ⚡');
+      } catch (err) {
+        // Silently ignore errors
+      }
+    };
+    pingServer();
+  }, []);
+
   return (
     <div className="fade-up">
       <section className="container" style={{ textAlign: 'center', paddingTop: 'clamp(4rem, 10vw, 8rem)', paddingBottom: '4rem' }}>
