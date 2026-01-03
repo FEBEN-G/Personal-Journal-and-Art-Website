@@ -12,8 +12,10 @@ router.get('/', async (req, res) => {
     }
 });
 
+const auth = require('../middleware/auth');
+
 // POST new verse
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const { verseText, reference, reflection, date } = req.body;
     const verse = new Verse({
         verseText,

@@ -18,6 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/journal', require('./routes/journalRoutes'));
 app.use('/api/verses', require('./routes/verseRoutes'));
 app.use('/api/art', require('./routes/artRoutes'));

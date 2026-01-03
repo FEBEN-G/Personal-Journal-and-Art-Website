@@ -26,8 +26,10 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+const auth = require('../middleware/auth');
+
 // POST new journal entry
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const { title, contentText, images, date, time } = req.body;
     const journal = new Journal({
         title,

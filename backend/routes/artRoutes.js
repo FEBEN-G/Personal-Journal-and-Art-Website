@@ -12,8 +12,10 @@ router.get('/', async (req, res) => {
     }
 });
 
+const auth = require('../middleware/auth');
+
 // POST new art piece
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const { title, imageUrl, description, date } = req.body;
     const art = new Art({
         title,
