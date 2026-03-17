@@ -47,4 +47,36 @@ router.post('/', auth, async (req, res) => {
     }
 });
 
+// PUT update journal entry
+router.put('/:id', auth, async (req, res) => {
+    try {
+        if (!require('mongoose').Types.ObjectId.isValid(req.params.id)) {
+            return res.status(404).json({ message: 'Invalid Entry ID' });
+        }
+        const updatedJournal = await Journal.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true, runValidators: true }
+        );
+        if (!updatedJournal) return res.status(404).json({ message: 'Entry not found' });
+        res.json(updatedJournal);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+});
+
+// DELETE journal entry
+router.delete('/:id', auth, async (req, res) => {
+    try {
+        if (!require('mongoose').Types.ObjectId.isValid(req.params.id)) {
+            return res.status(404).json({ message: 'Invalid Entry ID' });
+        }
+        const deletedJournal = await Journal.findByIdAndDelete(req.params.id);
+        if (!deletedJournal) return res.status(404).json({ message: 'Entry not found' });
+        res.json({ message: 'Journal entry deleted' });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 module.exports = router;

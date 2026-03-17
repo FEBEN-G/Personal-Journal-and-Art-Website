@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display, Outfit } from "next/font/google";
 import "./globals.css";
 import ThemeToggle from "@/components/ThemeToggle";
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -57,6 +58,7 @@ export default function RootLayout({
             <p style={{ opacity: 0.6 }}>A modern space for quiet thoughts.</p>
           </footer>
         </div>
+        <Script src="https://upload-widget.cloudinary.com/global/all.js" strategy="lazyOnload" />
       </body>
     </html>
   );

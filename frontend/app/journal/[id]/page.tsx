@@ -3,6 +3,7 @@
 import { useState, useEffect, use } from 'react';
 import DateTime from '@/components/DateTime';
 import { fetchJournalEntry } from '@/services/api';
+import { sanitizeImageUrl } from '@/utils/urlHelper';
 import { notFound } from 'next/navigation';
 
 export default function JournalEntryPage({ params }: { params: Promise<{ id: string }> }) {
@@ -13,6 +14,7 @@ export default function JournalEntryPage({ params }: { params: Promise<{ id: str
 
   useEffect(() => {
     async function loadData() {
+      if (id === 'admin') return; // Prevent conflicting with /admin route if accessed via /journal/admin
       try {
         const data = await fetchJournalEntry(id);
         if (!data) {
@@ -29,6 +31,20 @@ export default function JournalEntryPage({ params }: { params: Promise<{ id: str
     }
     loadData();
   }, [id]);
+
+  if (id === 'admin') {
+    return (
+      <div className="fade-up" style={{ padding: '6rem 0' }}>
+        <div className="art-card" style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', padding: '4rem', border: '1px dashed var(--accent-vibrant)' }}>
+          <p className="serif" style={{ fontSize: '1.2rem', color: 'var(--accent-vibrant)' }}>Redirecting to Admin Panel...</p>
+          <div style={{ marginTop: '2rem' }}>
+            <a href="/admin" className="btn btn-primary">Go to Admin</a>
+          </div>
+          <script dangerouslySetInnerHTML={{ __html: `window.location.href = '/admin';` }} />
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
@@ -99,8 +115,14 @@ export default function JournalEntryPage({ params }: { params: Promise<{ id: str
           {entry.images && entry.images.length > 0 && (
             <div style={{ marginTop: '4rem', display: 'grid', gridTemplateColumns: '1fr', gap: '2rem' }}>
               {entry.images.map((img: string, idx: number) => (
-                <div key={idx} style={{ borderRadius: '20px', overflow: 'hidden', boxShadow: 'var(--shadow)' }}>
-                  <img src={img} alt={`Journal entry image ${idx + 1}`} style={{ width: '100%', display: 'block' }} />
+                <div key={idx} style={{ 
+                  borderRadius: '15px', 
+                  overflow: 'hidden', 
+                  boxShadow: 'var(--shadow)', 
+                  maxWidth: '500px', 
+                  margin: '0 auto' 
+                }}>
+                  <img src={sanitizeImageUrl(img)} alt={`Journal entry image ${idx + 1}`} style={{ width: '100%', height: 'auto', display: 'block' }} />
                 </div>
               ))}
             </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { sanitizeImageUrl } from '@/utils/urlHelper';
 
 export default function GalleryGrid({ artPieces }: { artPieces: any[] }) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -23,7 +24,7 @@ export default function GalleryGrid({ artPieces }: { artPieces: any[] }) {
               position: 'relative'
             }}>
               <img 
-                src={art.imageUrl} 
+                src={sanitizeImageUrl(art.imageUrl)} 
                 alt={art.title} 
                 style={{ 
                   width: '100%', 
@@ -89,7 +90,7 @@ export default function GalleryGrid({ artPieces }: { artPieces: any[] }) {
           className="fade-in"
         >
           <img 
-            src={selectedImage} 
+            src={sanitizeImageUrl(selectedImage)} 
             alt="Full size art" 
             style={{ 
               maxWidth: '90%', 
